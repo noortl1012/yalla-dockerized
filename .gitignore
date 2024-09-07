@@ -19,3 +19,4 @@ terraform.rc
 *.tfstate.*
 
 terraform/
+azure-pipelines.yml
