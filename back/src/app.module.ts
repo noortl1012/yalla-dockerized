@@ -30,17 +30,17 @@ import { JwtService } from '@nestjs/jwt';
     ConfigModule.forRoot({
       isGlobal: true,}),
     TypeOrmModule.forRoot(
-    {
-      type: 'mssql',
-      host: 'yalla-sql-server.database.windows.net',
-      port:1433,
-      username: 'adminlogin',
-      password: 'P@ssw0rd1234!',
-      database: 'yalla-sql-db',
-      autoLoadEntities:true,
-      synchronize: true,
-      logging: true,
-    }
+      {
+        type: 'mysql',
+        host: process.env.DB_HOST || 'localhost',   // Using environment variables from docker-compose
+        port: parseInt(process.env.DB_PORT, 10) || 3306,
+        username: process.env.DB_USER || 'root',
+        password: process.env.DB_PASS || 'password',
+        database: process.env.DB_NAME || 'yalla',
+        autoLoadEntities:true,
+        synchronize: true,
+        logging: true,
+      }
     ),
     AuthModule,ParticipantModule, ReservationModule, EventModule, PaiementModule, CompteModule, FactureModule, NotificationModule, OrganisateurModule, CommentaireModule
     ],

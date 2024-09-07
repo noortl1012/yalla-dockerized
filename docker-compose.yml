@@ -1,0 +1,49 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: yalla
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - mynetwork
+
+  nest-backend:
+    build:
+      context: ./back  # Path to the backend folder
+    container_name: nest-backend
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASS: root
+      DB_NAME: yalla
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+    networks:
+      - mynetwork
+
+  angular-frontend:
+    build:
+      context: ./front  # Path to the frontend folder
+    container_name: angular-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - nest-backend
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  mysql-data:

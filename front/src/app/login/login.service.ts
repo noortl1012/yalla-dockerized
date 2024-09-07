@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { LoginModel } from './loginModel';
-
+import { environment } from 'src/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class LoginService {
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   private readonly TOKEN_KEY = 'jwtToken';
-  private readonly AUTH_API = 'http://localhost:3000/auth/login';
+  private readonly AUTH_API = '${environment.apiUrl}/auth/login';
 
    isLoggedIn = false;
 
